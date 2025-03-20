@@ -27,18 +27,14 @@ git clone https://github.com/NilayPatel27/serviceDiscovery
 # Testing the API in Postman
 1. Start Ollama server: ``` ollama serve ```
 2. Start registrar on machine 1: ``` python service_registrar.py ```
-3. Start a service in machine 1 and machine 2:- Enter service-registrar's system's ip in the API link and own ip in the address property like the below in postman:
+3. Enter below code in the terminal to start the services in machine 1 and machine 2 respectively:
 
 ```sh
-curl -X POST http://<ServiceDiscovery_IP>:5000/register \
-     -H "Content-Type: application/json" \
-     -d '{"name": "service_a", "address": "http://<Machine_1_IP>:6000"}'
+python ollama_microservice.py service_a 6000
 ```
 
 ```sh
-curl -X POST http://<ServiceDiscovery_IP>:5000/register \
-     -H "Content-Type: application/json" \
-     -d '{"name": "service_b", "address": "http://<Machine_2_IP>:6000"}'
+python ollama_microservice.py service_b 6000
 ```
 
 4. To see all the services running enter below code in postman:
