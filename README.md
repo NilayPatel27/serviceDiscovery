@@ -26,16 +26,32 @@ git clone https://github.com/NilayPatel27/serviceDiscovery
 
 # Testing the API in Postman
 1. Start Ollama server: ``` ollama serve ```
-2. Start registrar: ``` python service_registrar.py ```
-3. Start two services:
+2. Start registrar on machine 1: ``` python service_registrar.py ```
+3. Start a service in machine 1 and machine 2:- Enter service-registrar's system's ip in the API link and own ip in the address property like the below in postman:
 
-   
+```sh
+curl -X POST http://<ServiceDiscovery_IP>:5000/register \
+     -H "Content-Type: application/json" \
+     -d '{"name": "service_a", "address": "http://<Machine_1_IP>:6000"}'
+```
+
+```sh
+curl -X POST http://<ServiceDiscovery_IP>:5000/register \
+     -H "Content-Type: application/json" \
+     -d '{"name": "service_b", "address": "http://<Machine_2_IP>:6000"}'
+```
+
+4. To see all the services running enter below code in postman:
+   ```sh
+   curl --location 'http://<ServiceDiscovery_IP>:5000/services'
    ```
-   python ollama_microservice.py service_a 5001
-   python ollama_microservice.py service_b 5002
+5. To forward a message enter below code in postman:
+    ```sh
+   curl --location 'http://<ServiceDiscovery_IP>:5000/forward' \
+   --header 'Content-Type: application/json' \
+   --data '{
+     "from": "service_a",
+     "to": "service_b",
+     "prompt": "What'\''s the chatgpt?"
+   }'
    ```
-## Sample Response
-
-   ![image_2025-02-15_21-46-02](https://github.com/user-attachments/assets/f7671db8-aad4-4a9f-86be-99df9361419b)
-
-![image_2025-02-15_21-46-31](https://github.com/user-attachments/assets/4d93627f-2a0c-402c-8027-b93fea3dfa0d)
